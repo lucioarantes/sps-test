@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const segredo = "seusegredoaqui";
+const SECRET = "seusegredoaqui";
 
 function authMiddleware(req, res, next) {
   let token = null;
@@ -18,7 +18,7 @@ function authMiddleware(req, res, next) {
   }
 
   try {
-    const dados = jwt.verify(token, segredo);
+    const dados = jwt.verify(token, SECRET);
     req.user = dados;
     next();
   } catch (e) {
@@ -27,4 +27,4 @@ function authMiddleware(req, res, next) {
   }
 }
 
-module.exports = { authMiddleware, segredo };
+module.exports = { authMiddleware, SECRET };
