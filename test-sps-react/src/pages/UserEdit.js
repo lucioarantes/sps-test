@@ -28,19 +28,24 @@ function EditUser() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // Filtra campos preenchidos
     const dataToUpdate = {};
     Object.entries(form).forEach(([key, value]) => {
-      if (value.trim() !== "") {
-        dataToUpdate[key] = value.trim();
-      }
+      if (value.trim() !== "") dataToUpdate[key] = value.trim();
     });
 
     if (Object.keys(dataToUpdate).length === 0) {
       setFormError("Preencha pelo menos um campo para atualizar");
       return;
     }
+
+    try {
+      await userService.update(userId, dataToUpdate);
+      navigate("/users");
+    } catch (err) {
+      setFormError(err.response?.data?.message || "Erro ao atualizar o usuário");
+    }
   }
+
 
   return (
     <div

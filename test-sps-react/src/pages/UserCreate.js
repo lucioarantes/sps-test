@@ -18,6 +18,12 @@ function UserCreate() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    try {
+      await userService.create(form);
+      navigate("/users");
+    } catch (err) {
+      setErrors({ form: err.message || "Erro ao salvar o usuário" });
+    }
   }
 
   return (
